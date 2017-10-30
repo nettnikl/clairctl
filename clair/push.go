@@ -12,6 +12,7 @@ import (
 
 	"github.com/coreos/clair/api/v1"
 	"github.com/docker/distribution"
+	"github.com/docker/distribution/manifest/manifestlist"
 	"github.com/docker/distribution/manifest/schema1"
 	"github.com/docker/distribution/manifest/schema2"
 	"github.com/docker/docker/reference"
@@ -49,6 +50,11 @@ func Push(image reference.NamedTagged, manifest distribution.Manifest) error {
 		return layers.pushAll()
 	case *schema2.DeserializedManifest:
 		for _, l := range manifest.(*schema2.DeserializedManifest).Layers {
+			layers.digests = append(layers.digests, l.Digest.String())
+		}
+		return layers.pushAll()
+	case *manifestlist.DeserializedManifestList:
+		for _, l := range manifest.(*manifestlist.DeserializedManifestList).Manifests {
 			layers.digests = append(layers.digests, l.Digest.String())
 		}
 		return layers.pushAll()

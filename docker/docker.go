@@ -5,6 +5,7 @@ import (
 	"reflect"
 
 	"github.com/docker/distribution"
+	"github.com/docker/distribution/manifest/manifestlist"
 	"github.com/docker/distribution/manifest/schema1"
 	"github.com/docker/distribution/manifest/schema2"
 	"github.com/docker/docker/reference"
@@ -44,6 +45,10 @@ func GetLayerDigests(manifest distribution.Manifest) ([]digest.Digest, error) {
 		}
 	case schema2.DeserializedManifest:
 		for _, d := range manifest.(schema2.DeserializedManifest).Layers {
+			layers = append(layers, d.Digest)
+		}
+	case *manifestlist.DeserializedManifestList:
+		for _, d := range manifest.(*manifestlist.DeserializedManifestList).Manifests {
 			layers = append(layers, d.Digest)
 		}
 	default:
