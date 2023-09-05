@@ -18,7 +18,7 @@ RUN curl https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}.tgz
  && rm -f docker.tgz \
  && go get -u github.com/jteeuwen/go-bindata/...
 
-RUN curl -sL https://github.com/jgsqware/clairctl/archive/${CLAIRCTL_VERSION}.zip -o clairctl.zip \
+RUN curl -sL https://github.com/nettnikl/clairctl/archive/${CLAIRCTL_VERSION}.zip -o clairctl.zip \
  && mkdir -p ${GOPATH}/src/github.com/jgsqware/ \
  && unzip clairctl.zip -d ${GOPATH}/src/github.com/jgsqware/ \
  && rm -f clairctl.zip \
