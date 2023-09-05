@@ -1,4 +1,4 @@
-FROM alpine:3.5
+FROM alpine:latest
 
 ENV GOPATH=/go
 ENV PATH=${GOPATH}/bin:${PATH}
