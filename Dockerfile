@@ -11,12 +11,14 @@ RUN apk add --update curl \
  && apk add --virtual build-dependencies go gcc build-base glide git \
  && adduser clairctl -D \
  && mkdir -p /reports \
- && chown -R clairctl:clairctl /reports /tmp \
- && curl https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}.tgz -o docker.tgz \
+ && chown -R clairctl:clairctl /reports /tmp
+
+RUN curl https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}.tgz -o docker.tgz \
  && tar xfvz docker.tgz --strip 1 -C /usr/bin/ docker/docker \
  && rm -f docker.tgz \
- && go get -u github.com/jteeuwen/go-bindata/... \
- && curl -sL https://github.com/jgsqware/clairctl/archive/${CLAIRCTL_VERSION}.zip -o clairctl.zip \
+ && go get -u github.com/jteeuwen/go-bindata/...
+
+RUN curl -sL https://github.com/jgsqware/clairctl/archive/${CLAIRCTL_VERSION}.zip -o clairctl.zip \
  && mkdir -p ${GOPATH}/src/github.com/jgsqware/ \
  && unzip clairctl.zip -d ${GOPATH}/src/github.com/jgsqware/ \
  && rm -f clairctl.zip \
